@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html;" charset="UTF-8" name="Content-Type" />
+    <title>vaada Clients</title>
+    <meta name="keywords" content="Vaada, Clients, VaadaClients, vaada-Clients">
+
+    <meta name="title" property="og:title" content="vaada Clients">
+    <meta name="description" property="og:description" content="All Clients of vaada">
+    <meta property="og:url" content="URL">
+    <meta name="type" property="og:type" content="Content">
+    <meta name="locale" property="og:locale" content="en_US" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            background-color: #EBECF0;
+        }
+
+        .clientCard {
+            justify-content: center;
+            height: 100% !important;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        .item {
+            max-width: 263px;
+            width: 100%;
+        }
+
+        .products:hover {
+            text-decoration: underline !important;
+            color: rgba(255, 0, 0, 0.629) !important;
+        }
+
+        .name {
+            margin: 0px 10px;
+            color: #0a58cae3 !important;
+
+        }
+
+        .text {
+            margin-top: 1px !important;
+            height: 100%;
+            color: black !important;
+            padding: 0px 5px 5px 5px;
+        }
+
+        /* css grid */
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            justify-items: center;
+            padding: 20px;
+            margin-left: -15px;
+        }
+
+        /* Style for each grid item */
+        .grid-item {
+            position: relative;
+            padding: 10px;
+            text-align: center;
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+        }
+
+        .grid-item img {
+            /* max-width: 220px; */
+            width: 235px;
+            height: 230px;
+            margin-bottom: 5px;
+            padding: 0px 0px;
+            border: 1px solid #ccc;
+        }
+
+
+        .grid-item_title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 5px 5px;
+            line-height: 18px;
+            color: #0a58cae3 !important;
+        }
+
+        .grid-item_service {
+            cursor: pointer;
+            margin: 0;
+            padding: 0 4px;
+            color: #545050;
+            font-size: 15px;
+        }
+
+        .grid-item_location {
+            cursor: pointer;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            border-radius: 0px 0px 6px 6px;
+            border: none;
+            padding: 4px 0px;
+
+        }
+
+        .grid-item_location:hover {
+            background: rgb(0 0 0 / .2);
+            transition: ease-in-out 5ms;
+        }
+
+        /* mobile version */
+        @media (max-width: 572px) {
+            .container-fluid{
+                width: 65vh;
+            }
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+                /* gap: 15px; */
+                padding: 0px 0px;
+
+            }
+            .grid-item {
+                max-width: 200px;
+                padding: 0px 0px;
+            }
+            .grid-item img {
+                /* max-width: 220px; */
+                /* max-width: 155px;     */
+                height: 155px;
+                width: 89%;
+                position: relative;
+                top: -4px;
+                border: none;
+                margin: 0px;
+            }
+            .grid-item_title {
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 18px;
+            }
+            .grid-item_service {
+                padding: 0 7px;
+                font-size: 13px;
+            }
+        }
+
+        @media(max-width:511px){
+            .grid-item img {
+                height: 140px;
+                position: relative;
+                top: -4px;
+            }
+            .grid-item_title {
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 18px;
+            }
+            .grid-item_service {
+                padding: 0 7px;
+                font-size: 12px;
+            }
+        }
+
+        @media(max-width:480px){
+            .grid-item img {
+                height: 134px;
+                position: relative;
+                top: -5px;
+            }
+            .grid-item_title {
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 18px;
+            }
+            .grid-item_service {
+                padding: 0 7px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 467px) {
+            .grid-container {
+                gap: 5px;
+                row-gap: 15px;
+            }
+
+            .grid-item img {
+                max-width: 89%;
+                height: 135px;
+                width: 100%;
+                border: none;
+                position: relative;
+                top: -5px;
+            }
+
+            .grid-item {
+                max-width: 150px;
+                padding: 0px 0px;
+                margin: 10px 20px ;
+            }
+
+            .grid-item_title {
+                font-size: 10px;
+                font-weight: 500;
+                line-height: 18px;
+
+            }
+
+            .grid-item_service {
+                padding: 0 10px;
+                font-size: 8.4px;
+            }
+            .new{
+                position: relative;
+                top: -10px;
+            }
+        }
+
+        @media (max-width: 445px) {
+            .grid-item img {
+                max-width: 89%;
+                height: 130px;
+                width: 100%;
+                border: none;
+                position: relative;
+                top: -5px;
+            }
+        }
+        @media (max-width: 415px) {
+            .grid-item img {
+                max-width: 89%;
+                height: 125px;
+                width: 100%;
+                border: none;
+                position: relative;
+                top: -5px;
+            }
+        }
+
+        @media (max-width:390px ){
+            .grid-item img {
+                max-width: 88.5%;
+                height: 114px;
+                width: 100%;
+                border: none;
+                position: relative;
+                top: -4px;
+            }
+        }
+        .proper{
+            margin: 0px 0px !important;
+        }
+        .card-body{
+            margin: 0px 0px 0px 15px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-fluid px-lg-5 px-4" style="max-width: 100%;">
+        <div class="row">
+            <div class="col-12 proper mt-5 mb-3">
+                <div class="row ">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-body">
+                            <div class="col-12 style={padding: 0px 11px;}">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-6 col-12 px-md-0">
+                                        <div class="form-outline">
+                                            <input type="search" id="searchInput" class="form-control"
+                                                placeholder="🔍 Type product or service here" aria-label="Search" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <div class="row g-5 grid-container" id="clientGridWrapper">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+      
+</body>
+<script>
+    $.ajax({
+        url: "https://api-inter.vaada.app/fetchDetails",
+        type: "GET",
+        success: function (res) {
+            for (var i = 0; i < res.length; i++) {
+                var maxCharacters = 50; // Set the maximum number of characters you want to display
+                var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
+                    res[i].productsAndServices.substring(0, maxCharacters) + '...' :
+                    res[i].productsAndServices;
+                var clientCard = '<div class="grid-item item" data-search-keywords ="' + res[i].productsAndServices + '"> <a href="#" class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
+                $("#clientGridWrapper").append(clientCard);
+            }
+
+        },
+        error: function (xhr, status, error) {
+            console.log("status:" + status);
+        }
+    }).done(function () {
+    });
+
+    function initMap() {
+        // Create a map centered at a surat location
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 21.187032, lng: 72.801907 },
+            zoom: 14 // Adjust the zoom level as needed
+        });
+
+        //Ajax call for client location
+        $.ajax({
+            url: "https://api-inter.vaada.app/fetchDetails",
+            type: "GET",
+            success: function (res) {
+                for (var i = 0; i < res.length; i++) {
+                    // Convert latitude and longitude to numbers
+                    var lat = parseFloat(res[i].latitude);
+                    var lng = parseFloat(res[i].longitude);
+                    var marker = new google.maps.Marker({
+                        position: { lat: lat, lng: lng },
+                        map: map,
+                        title: (res[i].name)
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("status:" + status);
+            }
+        })
+    }
+
+    $('#searchInput').on('input', function () {
+        var searchText = $(this).val().toLowerCase();
+        $('.item').each(function () {
+            var keywords = $(this).data('search-keywords').toLowerCase();
+            if (keywords.includes(searchText)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjnsYdRjS-ZnEweZ_6hw-gvuHNBC4UOyQ&callback=initMap" async
+    defer></script>
+
+</html>
