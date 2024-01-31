@@ -21,7 +21,7 @@
 
     <style>
         body {
-            background-color: #fff;
+            background-color: #d3d3d354;
             overflow-x: hidden;
         }
 
@@ -189,6 +189,7 @@
                 font-size: 12px;
                 font-weight: 500;
                 line-height: 18px;
+                margin: 5px 0px 1px 0px;
             }
             .grid-item_service {
                 padding: 0 7px;
@@ -216,7 +217,7 @@
                 max-width: 150px;
                 padding: 0px 0px;
                 margin: 0px 0px ;
-                height: 200px;
+                height: 177px;
             }
 
             .grid-item_title {
@@ -224,12 +225,13 @@
                 font-weight: 500;
                 line-height: 14px;
                 height: 15%;
+                margin: 5px 0px 5px 0px;
 
             }
 
             .grid-item_service {
-                padding: 0 8px;
-                font-size: 8.4px;
+                padding: 0 7px;
+                font-size: 7.8px;
                 margin-bottom: 4px;
 
             }
@@ -268,6 +270,10 @@
                 border: none;
                 position: relative;
                 top: -4px;
+            }
+            .grid-item_service {
+                padding: 0 4px;
+
             }
         }
         .proper{
@@ -319,7 +325,7 @@
         type: "GET",
         success: function (res) {
             for (var i = 0; i < res.length; i++) {
-                var maxCharacters = 50; // Set the maximum number of characters you want to display
+                var maxCharacters = 40; // Set the maximum number of characters you want to display
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
