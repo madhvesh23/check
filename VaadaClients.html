@@ -339,7 +339,7 @@
         type: "GET",
         success: function (res) {
             for (var i = 0; i < res.length; i++) {
-                var maxCharacters = 40; // Set the maximum number of characters you want to display
+                var maxCharacters = 37; // Set the maximum number of characters you want to display
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
