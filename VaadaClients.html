@@ -201,7 +201,7 @@
                 font-size: 12px;
                 font-weight: 500;
                 line-height: 13px;
-                margin: 2px 0px 1px 0px;
+                margin: 4px 0px 1px 0px;
                 height: 25px;
             }
 
@@ -215,7 +215,7 @@
         @media (max-width: 467px) {
             .grid-container {
                 gap: 5px;
-                row-gap: 5px;
+                row-gap: 10px;
                 width: 107.1%;
                 margin-left: -13.5px
             }
@@ -241,7 +241,7 @@
                 font-weight: 500;
                 line-height: 11px;
                 height: 12%;
-                margin: 4px 0px 2px 0px;
+                margin: 6px 0px 2px 0px;
 
             }
 
@@ -288,7 +288,7 @@
             }
 
             .grid-item_title {
-                margin: 4px 0px 3px 0px;
+                margin: 6px 0px 3px 0px;
             }
         }
 
@@ -316,7 +316,7 @@
             }
 
             .grid-item_title {
-                margin: 4px 0px 5px 0px;
+                margin: 6px 0px 5px 0px;
             }
 
         }
@@ -337,9 +337,10 @@
                 height: 16%;
 
             }
+
             .grid-item_title {
-    margin: 4px 0px 0px 0px;
-}
+                margin: 6px 0px 0px 0px;
+            }
 
             .grid-container {
                 margin-left: -12px;
@@ -360,7 +361,7 @@
             .grid-item_title {
 
                 height: 16%;
-                margin: 4px 0px 2px 0px;
+                margin: 6px 0px 2px 0px;
 
             }
 
@@ -408,6 +409,11 @@
                             <div class="col-12 style={padding: 0px 11px;}">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-6 col-12 px-md-0">
+                                        <!-- <div class="form-outline mb-3">
+                                            <label for="filterDropdown" class="form-label">Filter by:</label>
+                                            <select class="form-select" id="filterDropdown">
+                                            </select>
+                                        </div> -->
                                         <div class="form-outline">
                                             <input type="search" id="searchInput" class="form-control"
                                                 placeholder="🔍 Type product or service here" aria-label="Search" />
@@ -439,22 +445,52 @@
         type: "GET",
         success: function (res) {
             for (var i = 0; i < res.length; i++) {
-                var maxCharacters = 50; // Set the maximum number of characters you want to display
+                var maxCharacters = 57; // Set the maximum number of characters you want to display
+                var filterOptions = ['all']; // Initialize with 'All'
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
-                var searchTerm = res[i].customProducts + res[i].productsAndServices;
+                var searchTerm = res[i].customProducts + res[i].productsAndService;
+                console.log(res[0])
                 var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
                 $("#clientGridWrapper").append(clientCard);
+                // Extract products and services keywords
+                var keywords = res[i].productsAndServices.toLowerCase().split(', ');
+
+                // console.log(keywords)
+                // Add unique keywords to the filter options array
+                for (var j = 0; j < keywords.length; j++) {
+                    if (!filterOptions.includes(keywords[j])) {
+                        filterOptions.push(keywords[j]);
+                    }
+                }
             }
 
+            // Populate filter dropdown options
+            for (var k = 0; k < filterOptions.length; k++) {
+                $('#filterDropdown').append('<option value="' + filterOptions[k] + '">' + filterOptions[k] + '</option>');
+            }
         },
         error: function (xhr, status, error) {
             console.log("status:" + status);
         }
     }).done(function () {
+        // Hide loading message after API request is complete
         $('#loading').hide();
-        // console.log("done")
+
+    //    // Filter function
+    //    $('#filterDropdown').on('change', function () {
+    //         var selectedCategory = $(this).val();
+    //         $('.item').each(function () {
+    //             var keywords = $(this).data('search-keywords').toLowerCase();
+    //             var isMatchingCategory = selectedCategory === 'all' || keywords.includes(selectedCategory);
+    //             if (isMatchingCategory) {
+    //                 $(this).show();
+    //             } else {
+    //                 $(this).hide();
+    //             }
+    //         });
+    //     });
     });
 
     $('#searchInput').on('input', function () {
