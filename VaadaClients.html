@@ -298,11 +298,11 @@
 
             .grid-item_service {
                 padding: 0 4px;
-
+                line-height: 9px;
             }
 
             .grid-item {
-                height: 168px;
+                height: 164px;
             }
 
             .grid-container {
@@ -312,7 +312,7 @@
 
         @media (max-width:370px) {
             .grid-item {
-                height: 172px;
+                height: 164px;
             }
 
             .grid-item img {
@@ -326,9 +326,32 @@
                 height: 16%;
 
             }
+
             .grid-container {
-    margin-left: -12px;
-}
+                margin-left: -12px;
+            }
+        }
+
+        @media (max-width:350px) {
+            .grid-item {
+                height: 162px;
+            }
+
+            .grid-item img {
+                max-width: 87.3%;
+                height: 100px;
+
+            }
+
+            .grid-item_title {
+
+                height: 16%;
+
+            }
+
+            .grid-container {
+                margin-left: -12px;
+            }
         }
 
         .proper {
@@ -347,6 +370,14 @@
 
         #searchInput {
             border-radius: 0 !important;
+        }
+
+        #loading {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height:75vh;
         }
     </style>
 
@@ -379,9 +410,15 @@
             </div>
 
         </div>
+        <div id="loading" style="display: none; text-align: center;">
+            <div class="spinner-border" style="color:#0a58cae3; " role="status">
+             
+            </div>
+        </div>
 
 </body>
 <script>
+    $('#loading').show();
     $.ajax({
         url: "https://api-inter.vaada.app/fetchDetailsForMob",
         type: "GET",
@@ -392,7 +429,7 @@
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
                 var searchTerm = res[i].customProducts + res[i].productsAndServices;
-                var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a href="#" class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
+                var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
                 $("#clientGridWrapper").append(clientCard);
             }
 
@@ -401,6 +438,8 @@
             console.log("status:" + status);
         }
     }).done(function () {
+        $('#loading').hide();
+        // console.log("done")
     });
 
     $('#searchInput').on('input', function () {
