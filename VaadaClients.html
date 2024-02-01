@@ -159,6 +159,7 @@
                 font-size: 14px;
                 font-weight: 500;
                 line-height: 16px;
+                margin: 2px 0px 2px 0px;
             }
 
             .grid-item_service {
@@ -200,7 +201,8 @@
                 font-size: 12px;
                 font-weight: 500;
                 line-height: 13px;
-                margin: 5px 0px 5px 0px;
+                margin: 2px 0px 1px 0px;
+                height: 25px;
             }
 
             .grid-item_service {
@@ -231,23 +233,23 @@
                 max-width: 150px;
                 padding: 0px 0px;
                 margin: 0px 0px;
-                height: 197px;
+                height: 185px;
             }
 
             .grid-item_title {
                 font-size: 10px;
                 font-weight: 500;
                 line-height: 11px;
-                height: 14%;
-                margin: 7px 0px 3px 0px;
+                height: 12%;
+                margin: 4px 0px 2px 0px;
 
             }
 
             .grid-item_service {
-                padding: 0 7px;
+                padding: 0 8px;
                 font-size: 7.8px;
                 margin-bottom: 4px;
-                line-height: 11px;
+                line-height: 10px;
             }
 
             .new {
@@ -267,7 +269,7 @@
             }
 
             .grid-item {
-                height: 190px;
+                height: 182px;
             }
         }
 
@@ -282,7 +284,11 @@
             }
 
             .grid-item {
-                height: 180px;
+                height: 174px;
+            }
+
+            .grid-item_title {
+                margin: 4px 0px 3px 0px;
             }
         }
 
@@ -302,17 +308,22 @@
             }
 
             .grid-item {
-                height: 164px;
+                height: 159px;
             }
 
             .grid-container {
                 margin-left: -11.9px;
             }
+
+            .grid-item_title {
+                margin: 4px 0px 5px 0px;
+            }
+
         }
 
         @media (max-width:370px) {
             .grid-item {
-                height: 164px;
+                height: 156px;
             }
 
             .grid-item img {
@@ -326,6 +337,9 @@
                 height: 16%;
 
             }
+            .grid-item_title {
+    margin: 4px 0px 0px 0px;
+}
 
             .grid-container {
                 margin-left: -12px;
@@ -334,7 +348,7 @@
 
         @media (max-width:350px) {
             .grid-item {
-                height: 162px;
+                height: 160px;
             }
 
             .grid-item img {
@@ -346,6 +360,7 @@
             .grid-item_title {
 
                 height: 16%;
+                margin: 4px 0px 2px 0px;
 
             }
 
@@ -377,7 +392,7 @@
             justify-content: center;
             flex-direction: column;
             align-items: center;
-            height:75vh;
+            height: 75vh;
         }
     </style>
 
@@ -412,7 +427,7 @@
         </div>
         <div id="loading" style="display: none; text-align: center;">
             <div class="spinner-border" style="width: 27px; height:27px; color:#0a58cae3; " role="status">
-             
+
             </div>
         </div>
 
@@ -424,7 +439,7 @@
         type: "GET",
         success: function (res) {
             for (var i = 0; i < res.length; i++) {
-                var maxCharacters = 32; // Set the maximum number of characters you want to display
+                var maxCharacters = 40; // Set the maximum number of characters you want to display
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
