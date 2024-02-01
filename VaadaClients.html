@@ -107,6 +107,7 @@
             padding: 0 4px;
             color: #545050;
             font-size: 15px;
+            line-height: 16px;
         }
 
         .grid-item_location {
@@ -409,11 +410,12 @@
                             <div class="col-12 style={padding: 0px 11px;}">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-6 col-12 px-md-0">
-                                        <!-- <div class="form-outline mb-3">
+                                        <div class="form-outline mb-3">
                                             <label for="filterDropdown" class="form-label">Filter by:</label>
                                             <select class="form-select" id="filterDropdown">
+                                                
                                             </select>
-                                        </div> -->
+                                        </div>
                                         <div class="form-outline">
                                             <input type="search" id="searchInput" class="form-control"
                                                 placeholder="🔍 Type product or service here" aria-label="Search" />
@@ -444,56 +446,46 @@
         url: "https://api-inter.vaada.app/fetchDetailsForMob",
         type: "GET",
         success: function (res) {
+            var dropdown = $('#filterDropdown');
+            dropdown.append('<option value="filter">category</option>');
+
             for (var i = 0; i < res.length; i++) {
-                var maxCharacters = 57; // Set the maximum number of characters you want to display
-                var filterOptions = ['all']; // Initialize with 'All'
+                var maxCharacters = 57;
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
-                var searchTerm = res[i].customProducts + res[i].productsAndService;
-                // console.log(res[0])
+                var searchTerm = res[i].customProducts + res[i].productsAndServices;
                 var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
                 $("#clientGridWrapper").append(clientCard);
-                // Extract products and services keywords
-                var keywords = res[i].productsAndServices.toLowerCase().split(',');
-
-                console.log(keywords)
-
-                // console.log(keywords)
-                // Add unique keywords to the filter options array
-                for (var j = 0; j < keywords.length; j++) {
-                    if (!filterOptions.includes(keywords[j])) {
-                        filterOptions.push(keywords[j]);
-                    }
+                var servicesArray = res[i].productsAndServices.split(',');
+                // Add each service as a separate option in the dropdown
+                for (var j = 0; j < servicesArray.length; j++) {
+                    var option = $('<option>', {
+                        value: servicesArray[j].trim(),
+                        text: servicesArray[j].trim()
+                    })
+                    dropdown.append(option);
                 }
             }
 
-            // Populate filter dropdown options
-            for (var k = 0; k < filterOptions.length; k++) {
-                $('#filterDropdown').append('<option value="' + filterOptions[k] + '">' + filterOptions[k] + '</option>');
-            }
+            dropdown.val('filter').trigger('change');
+            dropdown.on('change', function () {
+                var selectedValue = $(this).val();
+                if (selectedValue && selectedValue !== 'filter') {
+                    $('.grid-item').hide();
+                    $('[data-search-keywords*="' + selectedValue + '"]').show();
+                } else {
+                    $('.grid-item').show();
+                }
+            });
         },
         error: function (xhr, status, error) {
             console.log("status:" + status);
         }
     }).done(function () {
-        // Hide loading message after API request is complete
         $('#loading').hide();
-
-    //    // Filter function
-    //    $('#filterDropdown').on('change', function () {
-    //         var selectedCategory = $(this).val();
-    //         $('.item').each(function () {
-    //             var keywords = $(this).data('search-keywords').toLowerCase();
-    //             var isMatchingCategory = selectedCategory === 'all' || keywords.includes(selectedCategory);
-    //             if (isMatchingCategory) {
-    //                 $(this).show();
-    //             } else {
-    //                 $(this).hide();
-    //             }
-    //         });
-    //     });
     });
+
 
     $('#searchInput').on('input', function () {
         var searchText = $(this).val().toLowerCase();
