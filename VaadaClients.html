@@ -308,7 +308,7 @@
             }
 
             .grid-item {
-                height: 164px;
+                height: 165px;
             }
 
             .grid-container {
@@ -439,7 +439,7 @@
         type: "GET",
         success: function (res) {
             for (var i = 0; i < res.length; i++) {
-                var maxCharacters = 40; // Set the maximum number of characters you want to display
+                var maxCharacters = 45; // Set the maximum number of characters you want to display
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
