@@ -269,7 +269,7 @@
             }
 
             .grid-item {
-                height: 190px;
+                height: 192px;
             }
         }
 
@@ -284,7 +284,7 @@
             }
 
             .grid-item {
-                height: 178px;
+                height: 180px;
             }
 
             .grid-item_title {
@@ -308,7 +308,7 @@
             }
 
             .grid-item {
-                height: 165px;
+                height: 167px;
             }
 
             .grid-container {
@@ -323,7 +323,7 @@
 
         @media (max-width:370px) {
             .grid-item {
-                height: 163px;
+                height: 165px;
             }
 
             .grid-item img {
@@ -349,7 +349,7 @@
 
         @media (max-width:350px) {
             .grid-item {
-                height: 163px;
+                height: 164px;
             }
 
             .grid-item img {
@@ -451,11 +451,13 @@
                     res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                     res[i].productsAndServices;
                 var searchTerm = res[i].customProducts + res[i].productsAndService;
-                console.log(res[0])
+                // console.log(res[0])
                 var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
                 $("#clientGridWrapper").append(clientCard);
                 // Extract products and services keywords
-                var keywords = res[i].productsAndServices.toLowerCase().split(', ');
+                var keywords = res[i].productsAndServices.toLowerCase().split(',');
+
+                console.log(keywords)
 
                 // console.log(keywords)
                 // Add unique keywords to the filter options array
