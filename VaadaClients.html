@@ -234,11 +234,11 @@
                 max-width: 150px;
                 padding: 0px 0px;
                 margin: 0px 0px;
-                height: 187px;
+                height: 188px;
             }
 
             .grid-item_title {
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 500;
                 line-height: 11px;
                 height: 12%;
@@ -248,7 +248,7 @@
 
             .grid-item_service {
                 padding: 0 8px;
-                font-size: 7.8px;
+                font-size: 8.7px;
                 margin-bottom: 4px;
                 line-height: 10px;
             }
@@ -270,7 +270,7 @@
             }
 
             .grid-item {
-                height: 192px;
+                height: 193px;
             }
         }
 
@@ -285,7 +285,7 @@
             }
 
             .grid-item {
-                height: 180px;
+                height: 181px;
             }
 
             .grid-item_title {
@@ -309,7 +309,7 @@
             }
 
             .grid-item {
-                height: 167px;
+                height: 168px;
             }
 
             .grid-container {
@@ -324,7 +324,7 @@
 
         @media (max-width:370px) {
             .grid-item {
-                height: 165px;
+                height: 166px;
             }
 
             .grid-item img {
@@ -350,7 +350,7 @@
 
         @media (max-width:350px) {
             .grid-item {
-                height: 164px;
+                height: 165px;
             }
 
             .grid-item img {
@@ -458,6 +458,7 @@
                 var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
                 $("#clientGridWrapper").append(clientCard);
                 var servicesArray = res[i].productsAndServices.split(',');
+                console.log(res[i])
                 // Add each service as a separate option in the dropdown
                 for (var j = 0; j < servicesArray.length; j++) {
                     var option = $('<option>', {
