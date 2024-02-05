@@ -486,7 +486,7 @@
                         var trimmedService = servicesArray[k].trim();
                         if (!uniqueServicesSet.has(trimmedService)) {
                             var option2 = $('<option>', {
-                                value: trimmedCategory + '-' + trimmedService,
+                                value: trimmedService,
                                 text: trimmedService
                             });
                             dropdown.find('optgroup[label="' + trimmedCategory + '"]').append(option2);
