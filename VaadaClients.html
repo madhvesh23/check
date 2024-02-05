@@ -413,7 +413,7 @@
                                         <div class="form-outline mb-3">
                                             <label for="filterDropdown" class="form-label">Filter by:</label>
                                             <select class="form-select" id="filterDropdown">
-                                                
+
                                             </select>
                                         </div>
                                         <div class="form-outline">
@@ -431,69 +431,86 @@
                     </div>
                 </div>
             </div>
-
+            
         </div>
         <div id="loading" style="display: none; text-align: center;">
             <div class="spinner-border" style="width: 27px; height:27px; color:#0a58cae3; " role="status">
-
+                
             </div>
         </div>
-
-</body>
-<script>
+        
+    </body>
+    <script>
     $('#loading').show();
     $.ajax({
-    url: "https://api-inter.vaada.app/fetchDetailsForMob",
-    type: "GET",
-    success: function (res) {
-        var dropdown = $('#filterDropdown');
-        dropdown.append('<option value="filter"">Category</option>');
-        var uniqueServicesSet = new Set();
-
-        for (var i = 0; i < res.length; i++) {
-            var maxCharacters = 57;
-            var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
+        url: "https://api-inter.vaada.app/fetchDetailsForMob",
+        type: "GET",
+        success: function (res) {
+            var dropdown = $('#filterDropdown');
+            dropdown.append('<option value="filter"">Category</option>');
+            var uniqueServicesSet = new Set();
+            var uniqueCategorySet = new Set()
+            for (var i = 0; i < res.length; i++) {
+                var maxCharacters = 57;
+                var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
                 res[i].productsAndServices.substring(0, maxCharacters) + '...' :
                 res[i].productsAndServices;
-            var searchTerm = res[i].customProducts + res[i].productsAndServices;
-            var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
-            $("#clientGridWrapper").append(clientCard);
+                var searchTerm = res[i].customProducts + res[i].productsAndServices + res[i].name;
+                
+                var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
+                $("#clientGridWrapper").append(clientCard);
+                
+                var categoryArray = (res[i].mainCategory || '').split(',');
+                for (var j = 0; j < categoryArray.length; j++) {
+                    var trimmedCategory = categoryArray[j].trim();
+                    if (!uniqueCategorySet.has(trimmedCategory)) {
+                        var option = $('<optgroup>', {
+                            label: trimmedCategory,
+                            // text: trimmedCategory
+                        });
+                        dropdown.append(option);
+                        uniqueCategorySet.add(trimmedCategory);
+                    }
 
-            var servicesArray = res[i].productsAndServices.split(',');
-            for (var j = 0; j < servicesArray.length; j++) {
-                var trimmedService = servicesArray[j].trim();
-                if (!uniqueServicesSet.has(trimmedService)) {
-                    var option = $('<option>', {
-                        value: trimmedService,
-                        text: trimmedService
-                    });
-                    dropdown.append(option);
-
-                    // Add the service to the Set to track uniqueness
-                    uniqueServicesSet.add(trimmedService);
+                    var servicesArray = res[i].productsAndServices.split(',');
+                    for (var k = 0; k < servicesArray.length; k++) {
+                        var trimmedService = servicesArray[k].trim();
+                        if (!uniqueServicesSet.has(trimmedService)) {
+                            var option2 = $('<option>', {
+                                value: trimmedCategory + '-' + trimmedService,
+                                text: trimmedService
+                            });
+                            dropdown.find('optgroup[label="' + trimmedCategory + '"]').append(option2);
+                            uniqueServicesSet.add(trimmedService);
+                        }
+                    }
                 }
+                // console.log(uniqueServicesSet)
             }
+            
+            
+            dropdown.val('filter').trigger('change');
+            dropdown.on('change', function () {
+                var selectedValue = $(this).val();
+                console.log(selectedValue)
+                if (selectedValue && selectedValue !== 'filter') {
+                    $('.grid-item').hide();
+                    $('[data-search-keywords*="' + selectedValue + '"]').show();
+                } else {
+                    $('.grid-item').show();
+                }
+            });
+            
+            
+        },
+        error: function (xhr, status, error) {
+            console.log("status:" + status);
         }
-
-        dropdown.val('filter').trigger('change');
-        dropdown.on('change', function () {
-            var selectedValue = $(this).val();
-            if (selectedValue && selectedValue !== 'filter') {
-                $('.grid-item').hide();
-                $('[data-search-keywords*="' + selectedValue + '"]').show();
-            } else {
-                $('.grid-item').show();
-            }
-        });
-    },
-    error: function (xhr, status, error) {
-        console.log("status:" + status);
-    }
-}).done(function () {
-    $('#loading').hide();
-});
-
-
+    }).always(function () {
+        $('#loading').hide();
+    });
+    
+    
 
     $('#searchInput').on('input', function () {
         var searchText = $(this).val().toLowerCase();
