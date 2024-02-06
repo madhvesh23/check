@@ -425,10 +425,11 @@
             font-size: initial;
         }
 
-        .select-menu{
+        .select-menu {
             width: 95%;
         }
-        input::placeholder{
+
+        input::placeholder {
             color: rgba(69, 69, 69, 0.583);
             font-size: 15px;
         }
@@ -444,7 +445,7 @@
             border: 1px solid #a8a8a85c;
         }
 
-        #cat-name{
+        #cat-name {
             padding: 0px 5px;
         }
 
@@ -464,14 +465,15 @@
             color: #0a58cae3;
             font-weight: 700;
             padding: 0px 10px;
+            margin: 11px 0px 0px 0px;
         }
 
         #option-cat {
             font-size: 13px;
-            color: #000000cb;
-            padding: 8px 7px;
+            color: #000000c3;
+            padding: 8px 11px;
             cursor: pointer;
-            border: 1px solid #80808021;
+            border: 1px solid #8080800f;
             border-left: none;
             border-right: none;
             font-weight: 400;
@@ -503,7 +505,6 @@
                                             <div class="select-head">
                                                 <label for="filterDropdown" class="form-label">Filter by:</label>
                                                 <div class="select-main" id="customDropdownToggle">
-                                                    span
                                                     <span id="cat-name"></span>
                                                     <i class="bx bx-chevron-down"></i>
                                                 </div>
@@ -545,6 +546,7 @@
             const optionItem = document.getElementById('option');
             var defaultCategoryname = document.getElementById('cat-name');
             defaultCategoryname.textContent = 'View All';
+            defaultCategoryname.style.color = '#000000cb';
 
 
             var uniqueServicesSet = new Set();
@@ -561,7 +563,6 @@
 
 
                 var categoryArray = (res[i].mainCategory || '').split(',');
-
                 for (var j = 0; j < categoryArray.length; j++) {
                     var trimmedCategory = categoryArray[j].trim();
                     if (trimmedCategory.length > 0) {
@@ -570,24 +571,31 @@
                                 id: 'option',
                                 text: trimmedCategory
                             });
-                            $('#options').append(newCategoryItem);
-                            uniqueCategorySet.add(trimmedCategory);
-                        }
+                            var hasServices = false; 
 
-                        var servicesArray = (res[i].productsAndServices || '').split(',');
-                        for (var k = 0; k < servicesArray.length; k++) {
-                            var trimmedService = servicesArray[k].trim();
-                            if (trimmedService.length > 0 && !uniqueServicesSet.has(trimmedService)) {
-                                var option2 = $('<span>', {
-                                    id: 'option-cat',
-                                    text: trimmedService
-                                });
-                                $('#options').find('li:contains("' + trimmedCategory + '")').append(option2);
-                                uniqueServicesSet.add(trimmedService);
+                            var servicesArray = (res[i].productsAndServices || '').split(',');
+                            for (var k = 0; k < servicesArray.length; k++) {
+                                var trimmedService = servicesArray[k].trim();
+                                if (trimmedService.length > 0 && !uniqueServicesSet.has(trimmedService)) {
+                                    var option2 = $('<span>', {
+                                        id: 'option-cat',
+                                        text: trimmedService
+                                    });
+
+                                    newCategoryItem.append(option2);
+                                    uniqueServicesSet.add(trimmedService);
+
+                                    hasServices = true;
+                                }
+                            }
+                            if (hasServices) {
+                                $('#options').append(newCategoryItem);
+                                uniqueCategorySet.add(trimmedCategory);
                             }
                         }
                     }
                 }
+
             }
 
             document.getElementById('customDropdownToggle').addEventListener('click', function (event) {
