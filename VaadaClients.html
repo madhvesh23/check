@@ -625,12 +625,11 @@
             });
             function filterGridItems(selectedValue) {
                 const defaultName = document.getElementById('cat-name');
-
                 if (selectedValue) {
                     if (selectedValue === 'View All') {
                         $('.grid-item').show();
                         defaultName.textContent = 'View All';
-                    defaultName.style.color = '#000000'; 
+                        defaultName.style.color = '#000000';
                     } else {
                         $('.grid-item').hide();
                         $('[data-search-keywords*="' + selectedValue + '"]').show();
@@ -641,7 +640,7 @@
                     $('.grid-item').show();
                     // Reset the category name
                     defaultName.textContent = 'View All';
-                    defaultName.style.color = '#000000'; 
+                    defaultName.style.color = '#000000';
                 }
             }
         },
