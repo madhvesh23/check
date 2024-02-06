@@ -454,7 +454,6 @@
             box-shadow: 0px 0px 1px 0px #403c3cbd;
             padding: 6px 5px;
             max-height: 300px;
-            /* Adjust the maximum height as needed */
             overflow-y: auto;
             display: none;
             transition: opacity 1s ease;
@@ -469,12 +468,14 @@
 
         #option-cat {
             font-size: 13px;
-            color: #000000d9;
+            color: #000000cb;
             padding: 8px 7px;
             cursor: pointer;
             border: 1px solid #80808021;
             border-left: none;
             border-right: none;
+            font-weight: 400;
+
         }
 
         #option-cat:hover {
@@ -502,6 +503,7 @@
                                             <div class="select-head">
                                                 <label for="filterDropdown" class="form-label">Filter by:</label>
                                                 <div class="select-main" id="customDropdownToggle">
+                                                    span
                                                     <span id="cat-name"></span>
                                                     <i class="bx bx-chevron-down"></i>
                                                 </div>
