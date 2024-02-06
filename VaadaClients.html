@@ -257,6 +257,16 @@
                 position: relative;
                 top: -10px;
             }
+
+            optgroup {
+                font-size: 14px !important;
+                color: #0a58cae3 !important;
+            }
+
+            option {
+                color: black !important;
+                font-size: 12px!important;
+            }
         }
 
         @media (max-width: 445px) {
@@ -396,14 +406,27 @@
             align-items: center;
             height: 75vh;
         }
-        optgroup{
+
+        select {
+            appearance: none !important;
+            padding: 6px 11px 6px 11px !important;
+            border-radius: 0px !important;
+            color: #0a57caa4 !important;
+            font-weight: 500 !important;
+            margin: 0px 0px 10px 0px;
+            font-size: 15px!important;
+
+        }
+
+        optgroup {
             font-size: 19px;
             color: #0a58cae3;
+            font-weight: 500;
         }
-        option{
+
+        option {
             color: black;
             font-size: initial;
-
         }
     </style>
 
@@ -419,7 +442,7 @@
                             <div class="col-12 style={padding: 0px 11px;}">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-6 col-12 px-md-0">
-                                        <div class="form-outline mb-3">
+                                        <div class="form">
                                             <label for="filterDropdown" class="form-label">Filter by:</label>
                                             <select class="form-select" id="filterDropdown">
 
@@ -440,16 +463,16 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div id="loading" style="display: none; text-align: center;">
             <div class="spinner-border" style="width: 27px; height:27px; color:#0a58cae3; " role="status">
-                
+
             </div>
         </div>
-        
-    </body>
-    <script>
+
+</body>
+<script>
     $('#loading').show();
     $.ajax({
         url: "https://api-inter.vaada.app/fetchDetailsForMob",
@@ -462,13 +485,13 @@
             for (var i = 0; i < res.length; i++) {
                 var maxCharacters = 57;
                 var truncatedProducts = res[i].productsAndServices.length > maxCharacters ?
-                res[i].productsAndServices.substring(0, maxCharacters) + '...' :
-                res[i].productsAndServices;
+                    res[i].productsAndServices.substring(0, maxCharacters) + '...' :
+                    res[i].productsAndServices;
                 var searchTerm = res[i].customProducts + res[i].productsAndServices + res[i].name;
-                
+
                 var clientCard = '<div class="grid-item item" data-search-keywords ="' + searchTerm + '"> <a class="row p-1 clientCard h-100" style="text-decoration:none;"><img src="' + res[i].imageUrl + '" alt="' + res[i].name + '" /><div class="new"> <p class="grid-item_title">' + res[i].name + '</p> <p class="grid-item_service">' + truncatedProducts + '</p></div></a></div>';
                 $("#clientGridWrapper").append(clientCard);
-                
+
                 var categoryArray = (res[i].mainCategory || '').split(',');
                 for (var j = 0; j < categoryArray.length; j++) {
                     var trimmedCategory = categoryArray[j].trim();
@@ -496,8 +519,8 @@
                 }
                 // console.log(uniqueServicesSet)
             }
-            
-            
+
+
             dropdown.val('filter').trigger('change');
             dropdown.on('change', function () {
                 var selectedValue = $(this).val();
@@ -509,8 +532,8 @@
                     $('.grid-item').show();
                 }
             });
-            
-            
+
+
         },
         error: function (xhr, status, error) {
             console.log("status:" + status);
@@ -518,8 +541,8 @@
     }).always(function () {
         $('#loading').hide();
     });
-    
-    
+
+
 
     $('#searchInput').on('input', function () {
         var searchText = $(this).val().toLowerCase();
