@@ -443,6 +443,7 @@
             cursor: pointer;
             margin: 0px 0px 10px 0px;
             border: 1px solid #a8a8a85c;
+            height: 37px;
         }
 
         #cat-name {
@@ -503,13 +504,15 @@
                                     <div class="col-md-6 col-12 px-md-0">
                                         <div class="select-menu">
                                             <div class="select-head">
-                                                <label for="filterDropdown" class="form-label">Filter by:</label>
                                                 <div class="select-main" id="customDropdownToggle">
                                                     <span id="cat-name"></span>
                                                     <i class="bx bx-chevron-down"></i>
                                                 </div>
                                             </div>
                                             <ul id="options" class="options-list">
+                                                <li id="option">
+                                                    <span id="option-cat">View All</span>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="form-outline">
@@ -547,7 +550,6 @@
             var defaultCategoryname = document.getElementById('cat-name');
             defaultCategoryname.textContent = 'View All';
             defaultCategoryname.style.color = '#000000cb';
-
 
             var uniqueServicesSet = new Set();
             var uniqueCategorySet = new Set()
@@ -622,14 +624,24 @@
                 }
             });
             function filterGridItems(selectedValue) {
-                if (selectedValue && selectedValue !== 'filter') {
-                    $('.grid-item').hide();
-                    $('[data-search-keywords*="' + selectedValue + '"]').show();
-                    const defaultName = document.getElementById('cat-name')
-                    defaultName.textContent = selectedValue;
-                    defaultName.style.color = '#0a57cac7';
+                const defaultName = document.getElementById('cat-name');
+
+                if (selectedValue) {
+                    if (selectedValue === 'View All') {
+                        $('.grid-item').show();
+                        defaultName.textContent = 'View All';
+                    defaultName.style.color = '#000000'; 
+                    } else {
+                        $('.grid-item').hide();
+                        $('[data-search-keywords*="' + selectedValue + '"]').show();
+                        defaultName.textContent = selectedValue;
+                        defaultName.style.color = '#0a57cac7'; r
+                    }
                 } else {
                     $('.grid-item').show();
+                    // Reset the category name
+                    defaultName.textContent = 'View All';
+                    defaultName.style.color = '#000000'; 
                 }
             }
         },
