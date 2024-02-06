@@ -563,6 +563,7 @@
 
 
                 var categoryArray = (res[i].mainCategory || '').split(',');
+
                 for (var j = 0; j < categoryArray.length; j++) {
                     var trimmedCategory = categoryArray[j].trim();
                     if (trimmedCategory.length > 0) {
@@ -571,30 +572,30 @@
                                 id: 'option',
                                 text: trimmedCategory
                             });
-                            var hasServices = false; 
+                            $('#options').append(newCategoryItem);
+                            uniqueCategorySet.add(trimmedCategory);
+                        }
 
-                            var servicesArray = (res[i].productsAndServices || '').split(',');
-                            for (var k = 0; k < servicesArray.length; k++) {
-                                var trimmedService = servicesArray[k].trim();
-                                if (trimmedService.length > 0 && !uniqueServicesSet.has(trimmedService)) {
-                                    var option2 = $('<span>', {
-                                        id: 'option-cat',
-                                        text: trimmedService
-                                    });
-
-                                    newCategoryItem.append(option2);
-                                    uniqueServicesSet.add(trimmedService);
-
-                                    hasServices = true;
-                                }
-                            }
-                            if (hasServices) {
-                                $('#options').append(newCategoryItem);
-                                uniqueCategorySet.add(trimmedCategory);
+                        var servicesArray = (res[i].productsAndServices || '').split(',');
+                        for (var k = 0; k < servicesArray.length; k++) {
+                            var trimmedService = servicesArray[k].trim();
+                            if (trimmedService.length > 0 && !uniqueServicesSet.has(trimmedService)) {
+                                var option2 = $('<span>', {
+                                    id: 'option-cat',
+                                    text: trimmedService
+                                });
+                                $('#options').find('li:contains("' + trimmedCategory + '")').append(option2);
+                                uniqueServicesSet.add(trimmedService);
                             }
                         }
                     }
+                    // Check if no services were added for the category, then remove the category element
+                    if ($('#options').find('li:contains("' + trimmedCategory + '")').children('span').length === 0) {
+                        $('#options').find('li:contains("' + trimmedCategory + '")').remove();
+                        uniqueCategorySet.delete(trimmedCategory);
+                    }
                 }
+
 
             }
 
@@ -655,3 +656,34 @@
 </script>
 
 </html>
+
+
+
+<!-- var categoryArray = (res[i].mainCategory || '').split(',');
+
+for (var j = 0; j < categoryArray.length; j++) {
+    var trimmedCategory = categoryArray[j].trim();
+    if (trimmedCategory.length > 0) {
+        if (!uniqueCategorySet.has(trimmedCategory)) {
+            var newCategoryItem = $('<li>', {
+                id: 'option',
+                text: trimmedCategory
+            });
+            $('#options').append(newCategoryItem);
+            uniqueCategorySet.add(trimmedCategory);
+        }
+
+        var servicesArray = (res[i].productsAndServices || '').split(',');
+        for (var k = 0; k < servicesArray.length; k++) {
+            var trimmedService = servicesArray[k].trim();
+            if (trimmedService.length > 0 && !uniqueServicesSet.has(trimmedService)) {
+                var option2 = $('<span>', {
+                    id: 'option-cat',
+                    text: trimmedService
+                });
+                $('#options').find('li:contains("' + trimmedCategory + '")').append(option2);
+                uniqueServicesSet.add(trimmedService);
+            }
+        }
+    }
+} -->
