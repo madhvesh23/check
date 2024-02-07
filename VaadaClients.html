@@ -698,7 +698,7 @@ window.addEventListener('scroll', function () {
 
 // Handle focus events on input elements
 document.addEventListener('focusin', function (event) {
-    var card = document.querySelector('.fixed');
+    var card = document.querySelector('.card');
 
     if (card) {
         isInputFocused = true;
@@ -714,7 +714,7 @@ document.addEventListener('focusin', function (event) {
 });
 
 document.addEventListener('focusout', function () {
-    var card = document.querySelector('.fixed');
+    var card = document.querySelector('.card');
     
     if (card) {
         isInputFocused = false;
