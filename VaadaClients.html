@@ -34,9 +34,8 @@
 
         .card {
             background: white !important;
-            position: -webkit-sticky;
-            position: fixed;
-            top: 0;
+            position: fixed!important;
+            top: 0!important;
             z-index: 20;
             border-radius: 0!important;
         }
@@ -686,32 +685,7 @@
         });
     });
 
-    var scrollPosition = 0;
 
-// Save the initial scroll position
-window.addEventListener('scroll', function () {
-    scrollPosition = window.scrollY;
-});
-// Handle focus events on input elements
-document.addEventListener('focusin', function () {
-    // Adjust the card position when input is focused
-    var card = document.querySelector('.card');
-    console.log(card)
-    if (card) {
-        card.style.position = 'fixed';
-        card.style.top = `-${scrollPosition}px`;
-    }
-});
-
-document.addEventListener('focusout', function () {
-    // Restore the card position when input loses focus
-    var card = document.querySelector('.card');
-    if (card) {
-        card.style.position = '';
-        card.style.top = '';
-        window.scrollTo(0, scrollPosition);
-    }
-});
 </script>
 
 </html>
