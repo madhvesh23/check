@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +24,20 @@
         body {
             background-color: #d3d3d354;
             overflow-x: hidden;
+        }
+
+        .container-fluid {
+                padding: 0px 14.7px !important;
+                /* border: 1px solid red; */
+                overflow: hidden;
+            }
+
+        .card {
+            background: white !important;
+            position: fixed;
+            top: 0;
+            z-index: 20;
+            border-radius: 0!important;
         }
 
         .clientCard {
@@ -447,7 +460,7 @@
             padding: 0px 5px;
             line-height: 18px;
             font-size: 14px;
-            
+
         }
 
         #options {
@@ -524,7 +537,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mt-5">
+                    <div class="col-12 mt-5" style="margin-top: 57px!important; position: relative; top: 117px;">
                         <div class="row g-5 grid-container" id="clientGridWrapper">
                         </div>
                     </div>
@@ -653,10 +666,14 @@
 
 
 
+    function cleanText(text) {
+        return text.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ''); // Remove special characters and spaces
+    }
+
     $('#searchInput').on('input', function () {
-        var searchText = $(this).val().toLowerCase().replace(/\s+/g, '');
+        var searchText = cleanText($(this).val());
         $('.item').each(function () {
-            var keywords = $(this).data('search-keywords').toLowerCase().replace(/\s+/g, '');;
+            var keywords = cleanText($(this).data('search-keywords'));
             if (keywords.includes(searchText)) {
                 $(this).show();
             } else {
