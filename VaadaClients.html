@@ -654,9 +654,9 @@
 
 
     $('#searchInput').on('input', function () {
-        var searchText = $(this).val().toLowerCase();
+        var searchText = $(this).val().toLowerCase().replace(/\s+/g, '');
         $('.item').each(function () {
-            var keywords = $(this).data('search-keywords').toLowerCase();
+            var keywords = $(this).data('search-keywords').toLowerCase().replace(/\s+/g, '');;
             if (keywords.includes(searchText)) {
                 $(this).show();
             } else {
