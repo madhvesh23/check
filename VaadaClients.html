@@ -686,6 +686,46 @@
     });
 
 
+    var scrollPosition = 0;
+var isInputFocused = false;
+
+// Save the initial scroll position
+window.addEventListener('scroll', function () {
+    if (!isInputFocused) {
+        scrollPosition = window.scrollY;
+    }
+});
+
+// Handle focus events on input elements
+document.addEventListener('focusin', function (event) {
+    var card = document.querySelector('.card');
+
+    if (card) {
+        isInputFocused = true;
+        card.style.position = 'absolute';
+        card.style.top = `-${scrollPosition}px`;
+        window.scrollTo(0, 0);
+
+        // If the input is close to the bottom, scroll further to ensure it's fully visible
+        if (event.target.getBoundingClientRect().bottom > window.innerHeight - 100) {
+            window.scrollBy(0, 100);
+        }
+    }
+});
+
+document.addEventListener('focusout', function () {
+    var card = document.querySelector('.card');
+    
+    if (card) {
+        isInputFocused = false;
+        card.style.position = 'fixed';
+        card.style.top = '';
+        window.scrollTo(0, scrollPosition);
+    }
+});
+
+
+
 </script>
 
 </html>
