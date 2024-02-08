@@ -524,7 +524,7 @@
             display: block;
         }
 
-        #scrollBtn {
+        /* #scrollBtn {
       position: fixed;
       bottom: 20px;
       right: 10px;
@@ -539,11 +539,21 @@
       outline: none;
       display: none;
       box-shadow: 0px 0px 6px 0px #808080c4;
+    } */
+
+
+    #scrollBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      border: none;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      outline: none;
+      display: none;
     }
 
-    #scrollBtn:hover {
-      background-color: #0056b3;
-    }
     </style>
 
 </head>
@@ -592,7 +602,7 @@
             <div class="spinner-border" style="width: 27px; height:27px; color:#0a58cae3; " role="status">
             </div>
         </div>
-        <button id="scrollBtn" onclick="scrollToTop(event)"><a style='font-size:18px; position: relative; top: -4px;color: white;text-decoration: none;'><img width="20px" src="./up-arrow.png" alt=""></a></button>
+        <img id="scrollBtn" onclick="scrollToTop(event)" src="./up-arrow.png" alt="">
 
 </body>
 <script>
