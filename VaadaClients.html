@@ -33,11 +33,14 @@
         }
 
         .card {
-            background: white !important;
+            background: rgb(255 255 255) !important;
             position: fixed !important;
             top: 0 !important;
             z-index: 20;
             border-radius: 0 !important;
+            backdrop-filter: blur(9px);
+            box-shadow: 0px 0px 12px 0px #8080803d;
+            margin: 0px 0px 0px -3px;
         }
 
         .clientCard {
@@ -80,7 +83,7 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
             justify-items: center;
-            padding: 20px;
+            padding: 0px 10px;
             margin-left: -15px;
         }
 
@@ -142,6 +145,17 @@
             transition: ease-in-out 5ms;
         }
 
+        @media(max-width: 765px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+                justify-items: center;
+                padding: 0px;
+                margin-left: -15px;
+            }
+        }
+
         /* mobile version */
         @media (max-width: 572px) {
             .container-fluid {
@@ -150,20 +164,22 @@
 
             .grid-container {
                 grid-template-columns: repeat(3, 1fr);
-                /* gap: 15px; */
+                gap: 5px;
                 padding: 0px 0px;
 
             }
 
             .grid-item {
                 max-width: 200px;
-                padding: 0px 0px;
+                padding: 0px 5px 0px 2px;
+                margin-top: 0px;
+
             }
 
             .grid-item img {
                 /* max-width: 220px; */
                 /* max-width: 155px;     */
-                height: 143px;
+                height: 160px;
                 width: 90.5%;
                 position: relative;
                 top: -4px;
@@ -186,9 +202,10 @@
             }
         }
 
+
         @media(max-width:511px) {
             .grid-item img {
-                height: 140px;
+                height: 150px;
                 position: relative;
                 top: -4px;
             }
@@ -208,7 +225,7 @@
 
         @media(max-width:480px) {
             .grid-item img {
-                height: 134px;
+                height: 145px;
                 position: relative;
                 top: -5px;
             }
@@ -226,6 +243,7 @@
                 font-size: 11px;
                 line-height: 14px
             }
+           
         }
 
         @media (max-width: 467px) {
@@ -317,7 +335,7 @@
             }
 
             .container-fluid {
-                padding: 0px 17px 0px 16.7px !important;
+                padding: 0px 16px 0px 16.7px !important;
             }
         }
 
@@ -505,6 +523,27 @@
         span {
             display: block;
         }
+
+        #scrollBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      outline: none;
+      display: none;
+      box-shadow: 0px 0px 6px 0px #808080c4;
+    }
+
+    #scrollBtn:hover {
+      background-color: #0056b3;
+    }
     </style>
 
 </head>
@@ -551,9 +590,9 @@
         </div>
         <div id="loading" style="display: none; text-align: center;">
             <div class="spinner-border" style="width: 27px; height:27px; color:#0a58cae3; " role="status">
-
             </div>
         </div>
+        <button id="scrollBtn" onclick="scrollToTop(event)"><a style='font-size:28px; position: relative; top: -4px;color: white;text-decoration: none;'>&#8679;</a></button>
 
 </body>
 <script>
@@ -686,49 +725,73 @@
         });
     });
 
-    var scrollPosition = 0;
-var isInputFocused = false;
 
-// Save the initial scroll position
-window.addEventListener('scroll', function () {
-    if (!isInputFocused) {
-        scrollPosition = window.scrollY;
+    // var scrollPosition = 0;
+    // var isInputFocused = false;
+    // // Save the initial scroll position
+    // window.addEventListener('scroll', function () {
+    //     if (!isInputFocused) {
+    //         scrollPosition = window.scrollY;
+    //     }
+    // });
+    // // Handle focus events on input elements
+    // document.addEventListener('focusin', function (event) {
+    //     var card = document.querySelector('.card');
+    //     if (card) {
+    //         isInputFocused = true;
+    //         card.style.position = 'absolute';
+    //         card.style.top = `-${scrollPosition}px`;
+    //         window.scrollTo(0, 0);
+    //         // If the input is close to the bottom, scroll further to ensure it's fully visible
+    //         if (event.target.getBoundingClientRect().bottom > window.innerHeight - 100) {
+    //             window.scrollBy(0, 100);
+    //         }
+    //     }
+    // });
+    // document.addEventListener('focusout', function () {
+    //     var card = document.querySelector('.card');
+    //     if (card) {
+    //         isInputFocused = false;
+    //         card.style.position = 'fixed';
+    //         card.style.top = '';
+    //         window.scrollTo(0, scrollPosition);
+    //     }
+    // });
+
+
+     window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      var scrollButton = document.getElementById("scrollBtn");
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollButton.style.display = "block";
+      } else {
+        scrollButton.style.display = "none";
+      }
     }
-});
 
-// Handle focus events on input elements
-document.addEventListener('focusin', function (event) {
-    var card = document.querySelector('.card');
-
-    if (card) {
-        isInputFocused = true;
-        card.style.position = 'absolute';
-        card.style.top = `-${scrollPosition}px`;
-        window.scrollTo(0, 0);
-
-        // If the input is close to the bottom, scroll further to ensure it's fully visible
-        if (event.target.getBoundingClientRect().bottom > window.innerHeight - 100) {
-            window.scrollBy(0, 100);
-        }
+    function scrollToTop(event) {
+        event.stopPropagation(); 
+       document.body.scrollTop = 0; 
+      document.documentElement.scrollTop = 0; 
+      console.log("done")
     }
-});
-
-document.addEventListener('focusout', function () {
-    var card = document.querySelector('.card');
-    
-    if (card) {
-        isInputFocused = false;
-        card.style.position = 'fixed';
-        card.style.top = '';
-        window.scrollTo(0, scrollPosition);
-    }
-});
-
 
 
 </script>
 
 </html>
+
+
+
+
+
+
+
+
+
 
 
 
