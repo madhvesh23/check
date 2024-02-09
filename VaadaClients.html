@@ -149,7 +149,7 @@
             transition: ease-in-out 5ms;
         }
         .mobile-setup{
-            margin-top: 80px;
+            margin-top: 50px;
         }
 
         @media(max-width: 765px) {
@@ -165,11 +165,16 @@
 
         /* mobile version */
         @media (max-width: 572px) {
+
             .map-display{
-                display: none!important;
+                margin-bottom: 10px;
+                padding: 0px;
             }
-            .mobile-setup{
-            margin-top: 174px!important;
+            #map {
+            height: 310px;
+            width: 100%;
+            border: none;
+            margin-top: 103px;
         }
             .container-fluid {
                 width: 65vh;
@@ -312,6 +317,9 @@
                 color: black !important;
                 font-size: 9px !important;
             }
+            #map {
+            height: 250px;
+        }
         }
 
         @media (max-width: 445px) {
