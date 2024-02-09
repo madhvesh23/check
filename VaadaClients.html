@@ -50,8 +50,10 @@
         }
 
         #map {
-            height: 400px;
+            height: 450px;
             width: 100%;
+            border: 3px solid darkgray;
+    margin-top: 103px;
         }
 
         .item {
@@ -85,7 +87,7 @@
             gap: 25px;
             justify-items: center;
             padding: 0px 10px;
-            margin-left: -15px;
+            /* margin-left: -15px; */
         }
 
         /* Style for each grid item */
@@ -99,6 +101,7 @@
             align-items: center;
             background-color: white;
             border: 1px solid #a9a9a98a;
+            margin-top: 20px;
         }
 
         .grid-item img {
@@ -145,6 +148,9 @@
             background: rgb(0 0 0 / .2);
             transition: ease-in-out 5ms;
         }
+        .mobile-setup{
+            margin-top: 80px;
+        }
 
         @media(max-width: 765px) {
             .grid-container {
@@ -159,6 +165,12 @@
 
         /* mobile version */
         @media (max-width: 572px) {
+            .map-display{
+                display: none!important;
+            }
+            .mobile-setup{
+            margin-top: 174px!important;
+        }
             .container-fluid {
                 width: 65vh;
             }
@@ -244,7 +256,7 @@
                 font-size: 11px;
                 line-height: 14px
             }
-           
+
         }
 
         @media (max-width: 467px) {
@@ -526,18 +538,25 @@
         }
 
 
-    #scrollBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      border: none;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      outline: none;
-      display: none;
-    }
+        #scrollBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            outline: none;
+            display: none;
+        }
 
+        /* iframe {
+            border: 3px solid #00000082;
+            height: 112%;
+            margin-top: 111px;
+
+        } */
+        
     </style>
 
 </head>
@@ -545,6 +564,22 @@
 <body>
     <div class="container-fluid px-lg-5 px-4" style="max-width: 100%;">
         <div class="row">
+
+            <!-- ============================================================== -->
+            <!-- Map Section Start -->
+            <!-- ============================================================== -->
+            <div class=" map-display col-12 mt-3 px-md-0">
+                <div id="map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11459.9464920065!2d-70.2021159!3d44.104268!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04e59411d1563%3A0xfe4558290938b042!2sSurat%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1704538054789!5m2!1sen!2sin"
+                        width="100%" height="380" style="border:4px solid black;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- Map Section End -->
+            <!-- ============================================================== -->
+
             <div class="col-12 proper mt-5 mb-3">
                 <div class="row ">
                     <div class="card bg-transparent border-0">
@@ -574,7 +609,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mt-5" style="margin-top: 174px!important;">
+                    <div class=" mobile-setup col-12" style="margin-top: 45px;">
                         <div class="row g-5 grid-container" id="clientGridWrapper">
                         </div>
                     </div>
@@ -720,6 +755,9 @@
     });
 
 
+   
+
+
     // var scrollPosition = 0;
     // var isInputFocused = false;
     // // Save the initial scroll position
@@ -753,28 +791,59 @@
     // });
 
 
-     window.onscroll = function() {
-      scrollFunction();
+    window.onscroll = function () {
+        scrollFunction();
     };
 
     function scrollFunction() {
-      var scrollButton = document.getElementById("scrollBtn");
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        scrollButton.style.display = "block";
-      } else {
-        scrollButton.style.display = "none";
-      }
+        var scrollButton = document.getElementById("scrollBtn");
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollButton.style.display = "block";
+        } else {
+            scrollButton.style.display = "none";
+        }
     }
 
     function scrollToTop(event) {
-        event.stopPropagation(); 
-       document.body.scrollTop = 0; 
-      document.documentElement.scrollTop = 0; 
-      console.log("done")
+        event.stopPropagation();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        console.log("done")
     }
 
 
+    function initMap() {
+        // Create a map centered at a surat location
+        console.log("start")
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 21.187032, lng: 72.801907 },
+            zoom: 14 // Adjust the zoom level as needed
+        });
+
+        //Ajax call for client location
+        $.ajax({
+            url: "https://api-inter.vaada.app/fetchDetails",
+            type: "GET",
+            success: function (res) {
+                for (var i = 0; i < res.length; i++) {
+                    // Convert latitude and longitude to numbers
+                    var lat = parseFloat(res[i].latitude);
+                    var lng = parseFloat(res[i].longitude);
+                    var marker = new google.maps.Marker({
+                        position: { lat: lat, lng: lng },
+                        map: map,
+                        title: (res[i].name)
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("status:" + status);
+            }
+        })
+    }
+    
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjnsYdRjS-ZnEweZ_6hw-gvuHNBC4UOyQ&callback=initMap" asyncdefer></script>
 
 </html>
 
